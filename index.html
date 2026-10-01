@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)http://127.0.0.1:5500/development.html -->
+<html lang="mr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hotel Menu Card</title>
+
+    <!-- QR Code Library -->
+    <script src="./index_files/qrcode.min.js.download"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Noto Sans Devanagari", "Mangal", Arial, sans-serif;
+            background:
+                linear-gradient(rgba(45, 20, 10, 0.90), rgba(20, 8, 4, 0.95)),
+                url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1600&q=80");
+            background-size: cover;
+            background-attachment: fixed;
+            color: #29200d;
+            padding: 20px 10px 50px;
+        }
+
+        .menu {
+            max-width: 1050px;
+            margin: auto;
+            background: #fff8df;
+            border: 8px solid #8b321d;
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .header {
+            text-align: center;
+            padding: 25px 15px;
+            border-bottom: 2px dashed #9b3b20;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            color: #7b1e16;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            margin-top: 8px;
+            font-size: 17px;
+            color: #705b31;
+        }
+
+        .ornament {
+            color: #b8860b;
+            font-size: 28px;
+            margin: 8px 0;
+        }
+
+        .columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .section {
+            margin-bottom: 28px;
+        }
+
+        .section-title {
+            display: inline-block;
+            color: white;
+            background: linear-gradient(135deg, #4b1710, #8c2818);
+            padding: 9px 28px;
+            border-radius: 5px;
+            font-size: 22px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,.18);
+        }
+
+        .section:nth-child(even) .section-title {
+            background: linear-gradient(135deg, #35115d, #66208b);
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 3px;
+            border-bottom: 1px dotted #bca878;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .item-name {
+            flex: 1;
+        }
+
+        .dots {
+            flex: 1;
+            border-bottom: 1px dotted #9d8c66;
+            margin-top: 8px;
+        }
+
+        .price {
+            min-width: 75px;
+            text-align: right;
+            color: #8b2015;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .food-gallery {
+            margin-top: 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .food-gallery img {
+            width: 100%;
+            height: 145px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid #9a351e;
+            box-shadow: 0 5px 12px rgba(0,0,0,.25);
+            transition: .3s;
+        }
+
+        .food-gallery img:hover {
+            transform: scale(1.04);
+        }
+
+        .qr-area {
+            margin-top: 30px;
+            padding: 25px;
+            text-align: center;
+            background: #f3e5bd;
+            border: 2px dashed #8b321d;
+            border-radius: 15px;
+        }
+
+        .qr-area h2 {
+            color: #751d14;
+            margin-bottom: 8px;
+        }
+
+        .qr-area p {
+            color: #665536;
+            margin-bottom: 15px;
+        }
+
+        #qrcode {
+            background: white;
+            display: inline-block;
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #755d32;
+            font-size: 14px;
+        }
+
+        @media (max-width: 750px) {
+            body {
+                padding: 8px;
+            }
+
+            .menu {
+                padding: 12px;
+                border-width: 5px;
+            }
+
+            .columns {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+            .item {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 19px;
+            }
+
+            .food-gallery img {
+                height: 105px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .food-gallery {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .food-gallery img {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="menu">
+
+    <div class="header">
+        <div class="ornament">✦ ✦ ✦</div>
+        <h1>हॉटेल मेनू</h1>
+        <p>स्वादिष्ट भोजन • उत्तम सेवा • आपले स्वागत आहे</p>
+        <div class="ornament">❖</div>
+    </div>
+
+
+    <div class="columns">
+
+        <!-- LEFT SIDE -->
+        <div>
+
+            <!-- SOUP -->
+            <div class="section">
+                <div class="section-title">सूप स्पेशल</div>
+
+                <div class="item">
+                    <span class="item-name">टोमॅटो सूप</span>
+                    <span class="dots"></span>
+                    <span class="price">६०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">व्हेज सूप</span>
+                    <span class="dots"></span>
+                    <span class="price">५०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">चिकन सूप</span>
+                    <span class="dots"></span>
+                    <span class="price">९०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">चिकन क्लेअर सूप</span>
+                    <span class="dots"></span>
+                    <span class="price">९०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">चिकन उकड सूप</span>
+                    <span class="dots"></span>
+                    <span class="price">१३०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">मटन सूप</span>
+                    <span class="dots"></span>
+                    <span class="price">१५०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">मटन उकड सूप</span>
+                    <span class="dots"></span>
+                    <span class="price">१७०/-</span>
+                </div>
+            </div>
+
+
+            <!-- RICE -->
+            <div class="section">
+                <div class="section-title">राईस स्पेशल</div>
+
+                <div class="item">
+                    <span class="item-name">जिरा राईस</span>
+                    <span class="dots"></span>
+                    <span class="price">५०/१००/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">मसाला राईस</span>
+                    <span class="dots"></span>
+                    <span class="price">१२०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">व्हेज फ्राय राईस</span>
+                    <span class="dots"></span>
+                    <span class="price">१३०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">पनीर फ्राय राईस</span>
+                    <span class="dots"></span>
+                    <span class="price">१५०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">लसूण जिरा राईस</span>
+                    <span class="dots"></span>
+                    <span class="price">१२०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">काजू फ्राय राईस</span>
+                    <span class="dots"></span>
+                    <span class="price">२००/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">गार्लिक फ्राय राईस</span>
+                    <span class="dots"></span>
+                    <span class="price">१२०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">जिंजर फ्राय राईस</span>
+                    <span class="dots"></span>
+                    <span class="price">१००/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">व्हेज शेजवान फ्राय राईस</span>
+                    <span class="dots"></span>
+                    <span class="price">१५०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">चायनीज पुलाव</span>
+                    <span class="dots"></span>
+                    <span class="price">१५०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">फ्राईड राईस</span>
+                    <span class="dots"></span>
+                    <span class="price">१००/-</span>
+                </div>
+            </div>
+
+
+            <!-- FOOD PHOTOS -->
+            <div class="food-gallery">
+
+                <img src="./index_files/photo-1563379926898-05f4575a45d8">
+
+                <img src="./index_files/photo-1601050690597-df0568f70950">
+
+                <img src="./index_files/photo-1515003197210-e0cd71810b5f">
+
+                <img src="./index_files/photo-1513104890138-7c749659a591">
+
+                <img src="./index_files/photo-1603133872878-684f208fb84b">
+
+                <img src="./index_files/photo-1585937421612-70a008356fbe">
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+        <div>
+
+            <!-- PAPAD -->
+            <div class="section">
+                <div class="section-title">पापड</div>
+
+                <div class="item">
+                    <span class="item-name">मसाला पापड</span>
+                    <span class="dots"></span>
+                    <span class="price">३०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">रोस्ट पापड</span>
+                    <span class="dots"></span>
+                    <span class="price">२०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">फ्राय पापड</span>
+                    <span class="dots"></span>
+                    <span class="price">२५/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">नागली फ्राय</span>
+                    <span class="dots"></span>
+                    <span class="price">२५/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">नागली मसाला</span>
+                    <span class="dots"></span>
+                    <span class="price">३०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">नागली रोस्ट</span>
+                    <span class="dots"></span>
+                    <span class="price">२०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">जयपुरी पापड</span>
+                    <span class="dots"></span>
+                    <span class="price">८०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">सिंधी पापड</span>
+                    <span class="dots"></span>
+                    <span class="price">६०/-</span>
+                </div>
+
+                <div class="item">
+                    <span class="item-name">व्हेज कॅप्सी</span>
+                    <span class="dots"></span>
+                    <span class="price">१५०/-</span>
+                </div>
+            </div>
+
+
+            <!-- ROTI -->
+            <div class="section">
+                <div class="section-title">रोटी स्पेशल</div>
+
+                <div class="item"><span class="item-name">तंदूर रोटी</span><span class="dots"></span><span class="price">१२/-</span></div>
+
+                <div class="item"><span class="item-name">बटर रोटी</span><span class="dots"></span><span class="price">१५/-</span></div>
+
+                <div class="item"><span class="item-name">प्लेन पराठा</span><span class="dots"></span><span class="price">२५/-</span></div>
+
+                <div class="item"><span class="item-name">बटर पराठा</span><span class="dots"></span><span class="price">३०/-</span></div>
+
+                <div class="item"><span class="item-name">लच्छा पराठा</span><span class="dots"></span><span class="price">६०/-</span></div>
+
+                <div class="item"><span class="item-name">लच्छा बटर पराठा</span><span class="dots"></span><span class="price">६०/-</span></div>
+
+                <div class="item"><span class="item-name">मिरची रोटी</span><span class="dots"></span><span class="price">३०/-</span></div>
+
+                <div class="item"><span class="item-name">मिसी रोटी</span><span class="dots"></span><span class="price">४०/-</span></div>
+
+                <div class="item"><span class="item-name">खस्ता रोटी</span><span class="dots"></span><span class="price">५०/-</span></div>
+
+                <div class="item"><span class="item-name">बटर नान</span><span class="dots"></span><span class="price">४०/-</span></div>
+
+                <div class="item"><span class="item-name">प्लेन नान</span><span class="dots"></span><span class="price">३५/-</span></div>
+
+                <div class="item"><span class="item-name">गार्लिक नान</span><span class="dots"></span><span class="price">४०/-</span></div>
+
+                <div class="item"><span class="item-name">चिज नान</span><span class="dots"></span><span class="price">५०/-</span></div>
+
+                <div class="item"><span class="item-name">स्टफ नान</span><span class="dots"></span><span class="price">५०/-</span></div>
+
+                <div class="item"><span class="item-name">बेबी नान</span><span class="dots"></span><span class="price">३०/-</span></div>
+
+                <div class="item"><span class="item-name">कुलचा</span><span class="dots"></span><span class="price">२५/-</span></div>
+
+                <div class="item"><span class="item-name">बटर कुलचा</span><span class="dots"></span><span class="price">३०/-</span></div>
+
+                <div class="item"><span class="item-name">गार्लिक कुलचा</span><span class="dots"></span><span class="price">४०/-</span></div>
+
+                <div class="item"><span class="item-name">चपाती</span><span class="dots"></span><span class="price">१५/-</span></div>
+
+                <div class="item"><span class="item-name">पराठा</span><span class="dots"></span><span class="price">२०/-</span></div>
+
+                <div class="item"><span class="item-name">बाजरी भाकर</span><span class="dots"></span><span class="price">२०/-</span></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- QR CODE -->
+    <div class="qr-area">
+
+        <h2>📱 Scan करून Menu पहा</h2>
+
+        <p>
+            मोबाईल कॅमेऱ्याने QR Code Scan करा
+        </p>
+
+        <div id="qrcode" title="YOUR-MENU-URL-HERE"><canvas width="190" height="190" style="display: none;"></canvas><img src="data:image/png;base64,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" style="display: block;"></div>
+
+    </div>
+
+
+    <div class="footer">
+        धन्यवाद! पुन्हा भेट द्या ❤️
+    </div>
+
+</div>
+
+
+<script>
+
+    /*
+       IMPORTANT:
+       खालील URL तुमच्या LIVE WEBSITE च्या URL ने बदला.
+
+       Example:
+       https://yourname.github.io/hotel-menu/
+    */
+
+    const menuURL = "YOUR-MENU-URL-HERE";
+
+    new QRCode(document.getElementById("qrcode"), {
+        text: menuURL,
+        width: 190,
+        height: 190,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+
+</script>
+
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+
+</body></html>
